@@ -1,4 +1,4 @@
-<?php include_once("header.php"); ?>
+<?php error_reporting(0); include_once("header.php"); ?>
 <?php
 require('api/src/OAuth2/Client.php');
 require('api/src/OAuth2/GrantType/IGrantType.php');
