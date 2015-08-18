@@ -3,10 +3,9 @@
 require('api/src/OAuth2/Client.php');
 require('api/src/OAuth2/GrantType/IGrantType.php');
 require('api/src/OAuth2/GrantType/AuthorizationCode.php');
-require('api/src/File_k/index.php');
 // Create Authentication
-$clientId = CLI_ID;
-$clientSecret = CLI_SEC;
+$clientId = 'b87743babf8ad68eea77c3637eeedf7052588653c3ad7086e3062b0c8d5cb911';
+$clientSecret = '82315ffa68c5ca0b2ee927fb59c23272b03f224b680ade1fc209e090d8979491';
 $client = new OAuth2\Client($clientId, $clientSecret);
 
 $redirectUrl    = 'http://www.myapp.com/oauth_callback';
