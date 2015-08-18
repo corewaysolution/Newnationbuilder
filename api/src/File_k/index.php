@@ -1,4 +1,4 @@
 <?php
-define("CLI_ID","b87743babf8ad68eea77c3637eeedf7052588653c3ad7086e3062b0c8d5cb911");
-define("CLI_SEC","82315ffa68c5ca0b2ee927fb59c23272b03f224b680ade1fc209e090d8979491");
+define("CLI_ID","id");
+define("CLI_SEC","secret");
 ?>
