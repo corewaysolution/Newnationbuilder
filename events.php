@@ -3,7 +3,7 @@
 require('api/src/OAuth2/Client.php');
 require('api/src/OAuth2/GrantType/IGrantType.php');
 require('api/src/OAuth2/GrantType/AuthorizationCode.php');
-require('api/src/File_k/index.php');
+require('api/src/File_k/keys.php');
 // Create Authentication
 $clientId = CLI_ID;
 $clientSecret = CLI_SEC;
