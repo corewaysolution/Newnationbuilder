@@ -239,6 +239,82 @@ else {
 <?php    
 	}
 }
+
+else if(isset($_GET['event_rsvp']) && $_GET['event_rsvp'] != '') {
+	if(isset($_POST['submitrsvp'])){
+		
+		$first_name = $_POST['first_name'];
+		$last_name = $_POST['last_name'];
+     	$email = $_POST['email'];
+		
+		$mobile_number = $_POST['mobile_number'];
+		$guests_count = $_POST['guests_count'];
+
+		$paframs = array('person' => array('phone'=>$mobile_number,'first_name'=>$first_name,'last_name'=>$last_name,'email'=>$email));
+		$header = array('Authorization:' => $token,'Content-Type:' => 'application/json', 'Accept:' => 'application/json');
+		$response = $client->fetch($baseApiUrl . '/api/v1/people/push?access_token='.$token, $paframs, 'PUT',$header);
+		
+
+		$person_id = $response['result']['person']['id'];
+		$pams_for = array('rsvp' => array('person_id'=>$person_id,'guests_count'=>$guests_count,'canceled'=>'false'));
+		
+		$header = array('Authorization:' => $token,'Content-Type:' => 'application/json', 'Accept:' => 'application/json');
+		//$res_fponse = $client->fetch($baseApiUrl . '/api/v1/sites/corewaysolution/pages/events/'.$_GET['event_rsvp'].'/rsvps', $params, 'POST',$header);
+		$res_fponse = $client->fetch($baseApiUrl . '/api/v1/sites/corewaysolution/pages/events/'.$_GET['event_rsvp'].'/rsvps/', $pams_for, 'POST',$header);
+	
+		
+		$url = "http://" . $_SERVER['SERVER_NAME']."/nationbuilder/events.php";
+		echo "<script>location.href='$url'</script>";
+	}
+	
+else{
+	
+	// $response = $client->fetch($baseApiUrl . '/api/v1/sites/corewaysolution/pages/events//rsvps');
+    // $response = $client->fetch($baseApiUrl . '/api/v1/sites/corewaysolution/pages/247/event/rsvps');
+	// print_r( $response);
+	//  $response = $client->fetch($baseApiUrl . '/api/v1/sites/corewaysolution/pages/events/35');
+	//  $finalarray = $response['result']['event']; 
+  //  print_r( $finalarray);
+?>
+<div class="navigator add_new_event">
+
+<form method="post" action="<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>" id="user_rsvp_event" >
+		<h2 align="center">Add RSVp</h2>
+        <table  border="0" cellpadding="5" cellspacing="1" align="center" width="100%">
+        	<tr>
+            	<th>first name</th>
+                <td><input type="text" name="first_name" onchange="return calljavascript(this.value)" /></td>
+            </tr>
+        	<tr>
+            	<th>last name</th>
+                <td><input type="text" name="last_name" id="nametochange"/></td>
+            </tr>
+            <tr>
+            	<th>email</th>
+                <td><input type="text" name="email" id="nametochange"/></td>
+            </tr>
+            <tr>
+            	<th>mobile_number</th>
+                <td><input type="text" name="mobile_number" /></td>
+            </tr>
+            <tr>
+            	<th>guests count</th>
+                <td><input type="text" name="guests_count" /></td>
+            </tr>
+            
+            <tr>
+            	<td colspan="2" align="center"><input type="submit" name="submitrsvp" value="Save"/></td>
+            </tr>
+		</table>
+	</form>
+    </div>
+    
+<?php    
+	
+	}	
+	
+}
+
 else {
 
 // For update into person
@@ -264,6 +340,7 @@ if(count($response['result']['results']) > 0) {
         <th>When</th>
         <th>Venue</th>        
         <th>Status</th>
+        <th>RSVP</th>
         <th colspan="2">Action</th>
     </tr>
 	<?php for($i=0;$i<count($finalarray);$i++) { ?>
@@ -280,6 +357,7 @@ if(count($response['result']['results']) > 0) {
 		?></td>
         <td><?php echo $finalarray[$i]['venue']['name']; ?></td>
         <td><?php echo $finalarray[$i]['status']; ?></td>
+         <td><a href="?event_rsvp=<?php echo $finalarray[$i]['id'];?>">Send RSVP</a></td>
         <?php if($finalarray[$i]['status'] != "expired") { ?>
         <td><a href="?editdata=yes&editperson=<?php echo $finalarray[$i]['id'];?>">Edit</a></td>
         <?php } else { ?>
